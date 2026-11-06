@@ -17,9 +17,8 @@ Working on macOS 27.2 (26B123).
 ## Requirements
 
 - [Hammerspoon](https://www.hammerspoon.org/)
-- Hammerspoon granted:
-  - Privacy & Security → Accessibility
-  - Privacy & Security → Automation → Hammerspoon → System Events
+- [Hammerspoon](https://www.hammerspoon.org/) with Accessibility enabled. In the Hammerspoon console, run `hs.accessibilityState(true)`. macOS prompts for the permission, which is listed as "Device Control and Data Access" in Privacy & Security on macOS 27.
+- Automation permission for Hammerspoon to control System Events. Run `hs.osascript.applescript('tell application "System Events" to return name')` in the console. macOS prompts once. Allow it under System Settings → Privacy & Security → Automation → Hammerspoon → System Events.
 
 ## Install
 

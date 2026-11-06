@@ -186,6 +186,18 @@ function obj:init()
   -- For compatibility with SpoonInstall
 end
 
+function obj:checkPermissions()
+  local accessibility = hs.accessibilityState(true)
+  local automation = hs.osascript.applescript('tell application "System Events" to return name')
+  if not accessibility then
+    hs.alert.show("ReverseScroll needs Accessibility permission")
+  end
+  if not automation then
+    hs.alert.show("ReverseScroll needs Automation permission for System Events")
+  end
+  return accessibility and automation
+end
+
 function obj:configure(opts)
   if opts then
     if opts.hotkey then self.hotkey = opts.hotkey end
@@ -194,6 +206,7 @@ function obj:configure(opts)
     if opts.menuIconTemplate ~= nil then self.menuIconTemplate = opts.menuIconTemplate end
   end
 
+  self:checkPermissions()
   self:start()
   if self.hotkey then
     self:bindHotkeys({ toggle = self.hotkey })
