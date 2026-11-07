@@ -16,16 +16,14 @@ jobs:
 
       - name: Package
         env:
-          TAG: ${{ github.ref_name }}
+          VERSION: ${{ github.ref_name }}
         run: |
-          mkdir -p stage/ReverseScroll.spoon
-          cp init.lua README.md LICENSE.md stage/ReverseScroll.spoon/
-          (cd stage && zip -r "../ReverseScroll-${TAG}.zip" ReverseScroll.spoon)
+          git archive --format=zip --prefix=ReverseScroll.spoon/ -o "ReverseScroll-${VERSION}.zip" HEAD
 
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          VERSION: ${{ github.ref_name }}
         run: |
-          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TAG" --generate-notes
-          gh release upload "$TAG" "ReverseScroll-${TAG}.zip" --clobber
+          gh release view "$VERSION" >/dev/null 2>&1 || gh release create "$VERSION" --title "$VERSION" --generate-notes
+          gh release upload "$VERSION" "ReverseScroll-${VERSION}.zip" --clobber
